@@ -6,176 +6,118 @@
   <title>My Album — Memories Worth Keeping</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <style>
     /* ─── Custom Properties ───────────────────────────────── */
     :root {
-      --cream:      #F5ECD7;
-      --amber:      #C8A97E;
-      --espresso:   #2B1A0F;
-      --terracotta: #C17A4A;
-      --tape:       rgba(255, 235, 140, 0.55);
-      --shadow-sm:  0 2px 8px rgba(43, 26, 15, 0.18);
-      --shadow-md:  0 6px 24px rgba(43, 26, 15, 0.28);
-      --shadow-lg:  0 16px 48px rgba(43, 26, 15, 0.40);
-      --ease-soft:  cubic-bezier(0.45, 0.05, 0.30, 0.95);
-      --ease-out:   cubic-bezier(0.22, 0.61, 0.36, 1);
+      --bg:         #FAF6F0;
+      --bg-warm:    #F3EDE4;
+      --cream:      #EDE5D8;
+      --amber:      #B8956A;
+      --amber-light:#D4B896;
+      --espresso:   #1C1410;
+      --espresso-mid:#3D2E24;
+      --terracotta: #C4805A;
+      --sage:       #8A9A7B;
+      --text:       #2C2420;
+      --text-muted: #7A6B5D;
+      --white:      #FFFFFF;
+      --shadow-xs:  0 1px 3px rgba(28, 20, 16, 0.06);
+      --shadow-sm:  0 4px 12px rgba(28, 20, 16, 0.08);
+      --shadow-md:  0 8px 30px rgba(28, 20, 16, 0.10);
+      --shadow-lg:  0 20px 60px rgba(28, 20, 16, 0.14);
+      --shadow-xl:  0 32px 80px rgba(28, 20, 16, 0.20);
+      --ease:       cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-spring:cubic-bezier(0.34, 1.56, 0.64, 1);
+      --radius-sm:  8px;
+      --radius-md:  12px;
+      --radius-lg:  20px;
     }
 
     /* ─── Reset & Base ────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; font-size: 16px; }
 
     body {
-      background-color: var(--cream);
-      color: var(--espresso);
-      font-family: 'Lora', Georgia, serif;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 400;
       line-height: 1.7;
       overflow-x: hidden;
-      position: relative;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* ─── SVG Noise / Aged Paper Texture ─────────────────── */
+    /* ─── Subtle Noise Texture ───────────────────────────── */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       z-index: 0;
       pointer-events: none;
-      opacity: 0.06;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
       background-repeat: repeat;
-      background-size: 300px 300px;
     }
 
-    /* ─── Vignette ────────────────────────────────────────── */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      background: radial-gradient(ellipse at center,
-        transparent 55%,
-        rgba(43, 26, 15, 0.22) 100%
-      );
-    }
-
-    /* ─── Film Grain Overlay ──────────────────────────────── */
-    #grain {
-      position: fixed;
-      inset: 0;
-      z-index: 999;
-      pointer-events: none;
-      opacity: 0.035;
-      animation: grain-flicker 0.12s steps(1) infinite;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E");
-      background-size: 200px 200px;
-    }
-
-    @keyframes grain-flicker {
-      0%   { background-position:   0px   0px; }
-      10%  { background-position: -50px -50px; }
-      20%  { background-position:  30px  60px; }
-      30%  { background-position: -80px  20px; }
-      40%  { background-position:  60px -30px; }
-      50%  { background-position: -20px  80px; }
-      60%  { background-position:  90px  10px; }
-      70%  { background-position: -60px -70px; }
-      80%  { background-position:  20px  50px; }
-      90%  { background-position: -40px  30px; }
-      100% { background-position:  70px -20px; }
-    }
-
-    /* ─── Scroll Reveal Base ──────────────────────────────── */
+    /* ─── Scroll Reveal ──────────────────────────────────── */
     .reveal {
       opacity: 0;
-      transform: translateY(32px);
-      transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+      transform: translateY(28px);
+      transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
     }
     .reveal.visible {
       opacity: 1;
       transform: translateY(0);
     }
 
-    /* ─── Navigation ──────────────────────────────────────── */
+    /* ─── Navigation ─────────────────────────────────────── */
     nav {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: var(--espresso);
-      background-image:
-        repeating-linear-gradient(
-          0deg,
-          transparent,
-          transparent 2px,
-          rgba(200, 169, 126, 0.06) 2px,
-          rgba(200, 169, 126, 0.06) 3px
-        );
-      border-bottom: 2px solid var(--amber);
-      box-shadow: 0 3px 16px rgba(43, 26, 15, 0.45);
+      background: rgba(250, 246, 240, 0.82);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      border-bottom: 1px solid rgba(184, 149, 106, 0.15);
       display: flex;
-      align-items: stretch;
+      align-items: center;
       justify-content: center;
-      gap: 0;
+      gap: 0.5rem;
+      padding: 0 2rem;
     }
 
     nav a {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.88rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--amber);
+      color: var(--text-muted);
       text-decoration: none;
-      padding: 0.9rem 2rem;
+      padding: 1.15rem 1.5rem;
       position: relative;
-      transition: color 0.3s var(--ease-soft), background 0.3s var(--ease-soft);
-      border-right: 1px solid rgba(200, 169, 126, 0.18);
+      transition: color 0.35s var(--ease);
     }
-    nav a:first-child { border-left: 1px solid rgba(200, 169, 126, 0.18); }
 
     nav a::after {
       content: '';
       position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 3px;
+      bottom: -1px;
+      left: 50%;
+      width: 0;
+      height: 2px;
       background: var(--terracotta);
-      transform: scaleX(0);
-      transition: transform 0.35s var(--ease-soft);
+      border-radius: 1px;
+      transition: width 0.35s var(--ease-out), left 0.35s var(--ease-out);
     }
 
-    nav a:hover {
-      color: var(--cream);
-      background: rgba(200, 169, 126, 0.10);
-    }
-    nav a:hover::after { transform: scaleX(1); }
+    nav a:hover { color: var(--espresso); }
+    nav a:hover::after { width: 100%; left: 0; }
 
-    /* ─── Ornamental Divider ──────────────────────────────── */
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin: 1.5rem auto;
-      max-width: 320px;
-    }
-    .divider::before,
-    .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--amber), transparent);
-    }
-    .divider-icon {
-      color: var(--terracotta);
-      font-size: 1.1rem;
-      font-family: 'Dancing Script', cursive;
-      white-space: nowrap;
-    }
-
-    /* ─── Hero Section ────────────────────────────────────── */
+    /* ─── Hero Section ───────────────────────────────────── */
     #album {
       position: relative;
       z-index: 1;
@@ -185,409 +127,405 @@
       justify-content: center;
       padding: 6rem 2rem;
       text-align: center;
+      overflow: hidden;
     }
 
-    .hero-frame {
+    /* Warm gradient orb behind hero */
+    #album::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(196, 128, 90, 0.08) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
       position: relative;
-      padding: 3.5rem 4rem;
-      max-width: 680px;
-      width: 100%;
+      max-width: 700px;
     }
 
-    /* Corner frame ornaments */
-    .hero-frame::before,
-    .hero-frame::after {
-      content: '';
-      position: absolute;
-      width: 60px; height: 60px;
-      border-color: var(--amber);
-      border-style: solid;
-      opacity: 0.6;
-    }
-    .hero-frame::before {
-      top: 0; left: 0;
-      border-width: 2px 0 0 2px;
-    }
-    .hero-frame::after {
-      bottom: 0; right: 0;
-      border-width: 0 2px 2px 0;
-    }
-
-    .hero-corners::before,
-    .hero-corners::after {
-      content: '';
-      position: absolute;
-      width: 60px; height: 60px;
-      border-color: var(--amber);
-      border-style: solid;
-      opacity: 0.6;
-    }
-    .hero-corners::before {
-      top: 0; right: 0;
-      border-width: 2px 2px 0 0;
-    }
-    .hero-corners::after {
-      bottom: 0; left: 0;
-      border-width: 0 0 2px 2px;
-    }
-
-    .hero-eyebrow {
-      font-family: 'Dancing Script', cursive;
-      font-size: 1.15rem;
+    .hero-tag {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
       color: var(--terracotta);
-      letter-spacing: 0.05em;
-      margin-bottom: 0.6rem;
+      padding: 0.5rem 1.4rem;
+      border: 1px solid rgba(196, 128, 90, 0.3);
+      border-radius: 100px;
+      margin-bottom: 2.5rem;
       opacity: 0;
-      animation: fade-up 0.9s var(--ease-out) 0.2s forwards;
+      animation: fade-up 0.9s var(--ease-out) 0.15s forwards;
     }
 
     .hero-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3.2rem, 8vw, 5.5rem);
-      font-weight: 300;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(3.5rem, 9vw, 7rem);
+      font-weight: 400;
       font-style: italic;
-      line-height: 1.05;
+      line-height: 1.0;
       color: var(--espresso);
-      letter-spacing: -0.01em;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
       opacity: 0;
-      animation: fade-up 0.9s var(--ease-out) 0.4s forwards;
+      animation: fade-up 0.9s var(--ease-out) 0.35s forwards;
+    }
+
+    .hero-line {
+      width: 48px;
+      height: 1.5px;
+      background: var(--amber);
+      margin: 0 auto 1.5rem;
+      opacity: 0;
+      animation: fade-up 0.9s var(--ease-out) 0.5s forwards;
     }
 
     .hero-subtitle {
-      font-family: 'Lora', serif;
+      font-family: 'Inter', sans-serif;
       font-size: 1rem;
-      font-style: italic;
-      color: var(--amber);
-      margin-top: 1.2rem;
-      letter-spacing: 0.06em;
+      font-weight: 300;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
       opacity: 0;
-      animation: fade-up 0.9s var(--ease-out) 0.65s forwards;
+      animation: fade-up 0.9s var(--ease-out) 0.6s forwards;
+    }
+
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--amber-light);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fade-up 0.9s var(--ease-out) 1s forwards;
+    }
+
+    .hero-scroll-hint .arrow {
+      width: 1px;
+      height: 28px;
+      background: linear-gradient(to bottom, var(--amber-light), transparent);
+      animation: scroll-pulse 2s var(--ease) infinite;
+    }
+
+    @keyframes scroll-pulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.3); }
     }
 
     @keyframes fade-up {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ─── Section Wrappers ────────────────────────────────── */
-    section {
+    /* ─── Section Layout ─────────────────────────────────── */
+    section, footer {
       position: relative;
       z-index: 1;
-      padding: 5rem 2rem;
+      padding: 7rem 2rem;
     }
 
     .section-header {
       text-align: center;
-      margin-bottom: 3.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 0.8rem;
     }
 
     .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 5vw, 3rem);
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
       font-weight: 400;
       font-style: italic;
       color: var(--espresso);
+      line-height: 1.15;
     }
 
-    .section-sub {
-      font-family: 'Dancing Script', cursive;
-      font-size: 1rem;
-      color: var(--terracotta);
-      margin-top: 0.4rem;
+    .section-line {
+      width: 36px;
+      height: 1.5px;
+      background: var(--amber);
+      margin: 1.2rem auto 0;
     }
 
-    /* ─── Gallery / Masonry ───────────────────────────────── */
+    /* ─── Gallery ────────────────────────────────────────── */
     #memories {
-      background: linear-gradient(180deg,
-        rgba(200, 169, 126, 0.08) 0%,
-        transparent 100%
-      );
+      background: var(--bg-warm);
     }
 
     .gallery-grid {
-      columns: 3 280px;
-      column-gap: 2.2rem;
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto;
+      columns: 3;
+      column-gap: 1.6rem;
     }
 
-    /* Stagger animation for cards */
     .photo-card {
       break-inside: avoid;
-      margin-bottom: 2.2rem;
+      margin-bottom: 1.6rem;
       display: inline-block;
       width: 100%;
       opacity: 0;
-      transform: translateY(30px) rotate(var(--rot));
+      transform: translateY(24px);
       transition:
-        opacity 0.55s var(--ease-out),
-        transform 0.55s var(--ease-out),
-        box-shadow 0.4s var(--ease-soft);
+        opacity 0.6s var(--ease-out),
+        transform 0.6s var(--ease-out);
     }
 
     .photo-card.visible {
       opacity: 1;
-      transform: translateY(0) rotate(var(--rot));
-    }
-
-    /* Unique rotations per card */
-    .photo-card:nth-child(1)  { --rot: -2.1deg; }
-    .photo-card:nth-child(2)  { --rot:  1.8deg; }
-    .photo-card:nth-child(3)  { --rot: -1.3deg; }
-    .photo-card:nth-child(4)  { --rot:  2.7deg; }
-    .photo-card:nth-child(5)  { --rot: -2.5deg; }
-    .photo-card:nth-child(6)  { --rot:  0.9deg; }
-    .photo-card:nth-child(7)  { --rot: -1.7deg; }
-    .photo-card:nth-child(8)  { --rot:  2.2deg; }
-    .photo-card:nth-child(9)  { --rot: -0.8deg; }
-    .photo-card:nth-child(10) { --rot:  1.5deg; }
-    .photo-card:nth-child(11) { --rot: -2.9deg; }
-    .photo-card:nth-child(12) { --rot:  1.1deg; }
-
-    .photo-card:hover {
-      transform: translateY(-5px) rotate(0deg) !important;
-      box-shadow: var(--shadow-lg) !important;
-      z-index: 10;
+      transform: translateY(0);
     }
 
     .polaroid {
-      background: #fff;
-      padding: 10px 10px 44px;
-      box-shadow: var(--shadow-md);
-      position: relative;
+      background: var(--white);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
       cursor: pointer;
-      transition: box-shadow 0.4s var(--ease-soft);
+      position: relative;
+      transition:
+        transform 0.5s var(--ease-out),
+        box-shadow 0.5s var(--ease-out);
     }
 
-    /* Corner tape — top-left */
-    .polaroid::before {
-      content: '';
-      position: absolute;
-      top: -10px;
-      left: 18px;
-      width: 38px;
-      height: 18px;
-      background: var(--tape);
-      border-radius: 2px;
-      transform: rotate(-3deg);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-    }
-
-    /* Corner tape — bottom-right */
-    .polaroid::after {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      right: 22px;
-      width: 38px;
-      height: 18px;
-      background: var(--tape);
-      border-radius: 2px;
-      transform: rotate(2deg);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    .polaroid:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
     }
 
     .polaroid img {
       width: 100%;
       display: block;
-      filter: sepia(40%) contrast(0.95) brightness(0.97) saturate(0.85);
-      transition: filter 0.4s var(--ease-soft);
+      filter: sepia(12%) contrast(0.97) brightness(1.01) saturate(0.9);
+      transition: filter 0.5s var(--ease);
     }
 
-    .photo-card:hover .polaroid img {
-      filter: sepia(20%) contrast(1.0) brightness(1.0) saturate(0.95);
+    .polaroid:hover img {
+      filter: sepia(4%) contrast(1.02) brightness(1.02) saturate(1.0);
+    }
+
+    .polaroid-info {
+      padding: 1rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     .polaroid-caption {
+      font-family: 'Caveat', cursive;
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+
+    .polaroid-date {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      opacity: 0.6;
+    }
+
+    /* Vintage corner accent — subtle */
+    .polaroid::after {
+      content: '';
       position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 8px;
+      top: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 36px 36px 0;
+      border-color: transparent rgba(184, 149, 106, 0.08) transparent transparent;
+      border-radius: 0 var(--radius-md) 0 0;
+      transition: border-color 0.4s var(--ease);
     }
 
-    .polaroid-caption span {
-      font-family: 'Dancing Script', cursive;
-      font-size: 0.92rem;
-      color: #5a3e28;
-      text-align: center;
-      line-height: 1.3;
+    .polaroid:hover::after {
+      border-color: transparent rgba(196, 128, 90, 0.12) transparent transparent;
     }
 
-    /* ─── Timeline Section ────────────────────────────────── */
+    /* ─── Timeline Section ───────────────────────────────── */
     #timeline {
-      background: linear-gradient(180deg,
-        transparent 0%,
-        rgba(43, 26, 15, 0.03) 50%,
-        transparent 100%
-      );
+      background: var(--bg);
     }
 
     .timeline-wrapper {
-      max-width: 760px;
+      max-width: 800px;
       margin: 0 auto;
       position: relative;
-      padding-left: 2.5rem;
+      padding-left: 3rem;
     }
 
-    /* Vertical dotted line */
+    /* Vertical line */
     .timeline-wrapper::before {
       content: '';
       position: absolute;
-      left: 0;
+      left: 6px;
       top: 0;
       bottom: 0;
-      width: 2px;
-      background-image: repeating-linear-gradient(
+      width: 1px;
+      background: linear-gradient(
         to bottom,
-        var(--amber) 0px,
-        var(--amber) 6px,
-        transparent 6px,
-        transparent 14px
+        transparent,
+        var(--amber-light) 10%,
+        var(--amber-light) 90%,
+        transparent
       );
-      opacity: 0.5;
     }
 
     .timeline-entry {
-      display: flex;
-      gap: 2rem;
-      margin-bottom: 3.5rem;
       position: relative;
-      align-items: flex-start;
+      margin-bottom: 4.5rem;
     }
+
+    .timeline-entry:last-child { margin-bottom: 0; }
 
     /* Dot on the line */
     .timeline-entry::before {
       content: '';
       position: absolute;
-      left: -2.8rem;
-      top: 1.1rem;
-      width: 12px;
-      height: 12px;
+      left: -2.65rem;
+      top: 0.6rem;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--terracotta);
+      transition: background 0.3s var(--ease);
+    }
+
+    .timeline-entry:hover::before {
       background: var(--terracotta);
-      border: 2px solid var(--cream);
-      box-shadow: 0 0 0 2px var(--amber);
     }
 
     .timeline-year {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 3rem;
-      font-weight: 300;
-      font-style: italic;
-      color: var(--amber);
-      line-height: 1;
-      min-width: 90px;
-      opacity: 0.7;
-      padding-top: 0.2rem;
-      flex-shrink: 0;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 0.8rem;
     }
 
-    .timeline-content {
-      flex: 1;
+    .timeline-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      transition: box-shadow 0.4s var(--ease), transform 0.4s var(--ease);
+    }
+
+    .timeline-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
     }
 
     .timeline-photo {
-      width: 110px;
-      height: 110px;
+      width: 180px;
+      min-height: 180px;
       object-fit: cover;
       flex-shrink: 0;
-      filter: sepia(45%) contrast(0.92) brightness(0.96) saturate(0.8);
-      border: 3px solid #fff;
-      box-shadow: var(--shadow-sm);
-      transform: rotate(-1.5deg);
+      filter: sepia(18%) contrast(0.95) brightness(0.98) saturate(0.85);
+    }
+
+    .timeline-text {
+      padding: 1.8rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .timeline-text h3 {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Playfair Display', serif;
       font-size: 1.35rem;
-      font-weight: 600;
+      font-weight: 500;
+      font-style: italic;
       color: var(--espresso);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.6rem;
     }
 
     .timeline-text p {
-      font-size: 0.92rem;
-      color: #6b4c34;
-      font-style: italic;
-      line-height: 1.75;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.8;
     }
 
-    .timeline-inner {
-      display: flex;
-      gap: 1.4rem;
-      align-items: flex-start;
-    }
-
-    /* ─── About / Footer ──────────────────────────────────── */
+    /* ─── About / Footer ─────────────────────────────────── */
     #about {
       text-align: center;
-      padding: 5rem 2rem 4rem;
+      padding: 7rem 2rem 5rem;
       background: var(--espresso);
-      background-image:
-        repeating-linear-gradient(
-          0deg,
-          transparent,
-          transparent 3px,
-          rgba(200, 169, 126, 0.04) 3px,
-          rgba(200, 169, 126, 0.04) 4px
-        );
-      position: relative;
-      z-index: 1;
+      color: var(--cream);
     }
 
-    #about .section-title {
-      color: var(--amber);
-    }
-
-    #about .divider::before,
-    #about .divider::after {
-      background: linear-gradient(90deg, transparent, var(--terracotta), transparent);
-    }
-
-    #about .divider-icon {
-      color: var(--amber);
-    }
+    #about .section-label { color: var(--terracotta); }
+    #about .section-title { color: var(--cream); }
+    #about .section-line { background: var(--amber); opacity: 0.4; }
 
     .about-text {
-      max-width: 560px;
-      margin: 0 auto 2.5rem;
-      font-size: 1rem;
-      font-style: italic;
-      color: rgba(200, 169, 126, 0.85);
-      line-height: 1.9;
+      max-width: 520px;
+      margin: 0 auto 3rem;
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: rgba(237, 229, 216, 0.7);
+      line-height: 2;
     }
 
     .footer-sig {
-      font-family: 'Dancing Script', cursive;
-      font-size: 1.5rem;
+      font-family: 'Caveat', cursive;
+      font-size: 1.6rem;
       color: var(--terracotta);
-      margin-top: 0.5rem;
     }
 
-    .footer-note {
-      margin-top: 2.5rem;
-      font-size: 0.72rem;
+    .footer-bottom {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(184, 149, 106, 0.12);
+      font-size: 0.68rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: rgba(200, 169, 126, 0.3);
+      color: rgba(184, 149, 106, 0.25);
     }
 
-    /* ─── Lightbox ────────────────────────────────────────── */
+    /* ─── Lightbox ───────────────────────────────────────── */
     #lightbox {
       position: fixed;
       inset: 0;
       z-index: 500;
-      background: rgba(22, 13, 6, 0.92);
+      background: rgba(28, 20, 16, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 2rem;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.5s var(--ease-soft);
+      transition: opacity 0.45s var(--ease);
     }
 
     #lightbox.open {
@@ -595,76 +533,83 @@
       pointer-events: all;
     }
 
-    #lightbox-img-wrap {
+    #lightbox-content {
       position: relative;
-      max-width: min(90vw, 820px);
-      transform: scale(0.88);
+      max-width: min(90vw, 860px);
+      transform: scale(0.92) translateY(12px);
       transition: transform 0.5s var(--ease-out);
     }
 
-    #lightbox.open #lightbox-img-wrap {
-      transform: scale(1);
+    #lightbox.open #lightbox-content {
+      transform: scale(1) translateY(0);
     }
 
     #lightbox-img {
       display: block;
       max-width: 100%;
-      max-height: 80vh;
+      max-height: 78vh;
       object-fit: contain;
-      filter: sepia(25%) contrast(0.97) brightness(0.98);
-      box-shadow: 0 32px 80px rgba(0,0,0,0.7);
-      border: 8px solid #fff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      filter: sepia(8%) contrast(0.98) brightness(1.0);
     }
 
     #lightbox-caption {
-      font-family: 'Dancing Script', cursive;
+      font-family: 'Caveat', cursive;
       font-size: 1.2rem;
-      color: var(--amber);
+      color: var(--amber-light);
       text-align: center;
-      margin-top: 1rem;
+      margin-top: 1.2rem;
+      opacity: 0.8;
     }
 
     #lightbox-close {
       position: absolute;
-      top: -18px;
-      right: -18px;
-      width: 38px; height: 38px;
+      top: -14px;
+      right: -14px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      background: var(--terracotta);
-      color: #fff;
-      border: none;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      color: var(--cream);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       cursor: pointer;
-      font-size: 1.15rem;
-      line-height: 1;
+      font-size: 0.85rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: var(--shadow-md);
-      transition: background 0.25s var(--ease-soft), transform 0.25s var(--ease-soft);
+      transition: background 0.3s var(--ease), transform 0.3s var(--ease-spring);
     }
 
     #lightbox-close:hover {
-      background: var(--espresso);
-      transform: scale(1.12);
+      background: rgba(255, 255, 255, 0.22);
+      transform: scale(1.1);
     }
 
-    /* ─── Responsive ──────────────────────────────────────── */
+    /* ─── Responsive ─────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .gallery-grid { columns: 2; }
+      .timeline-photo { width: 140px; min-height: 140px; }
+    }
+
     @media (max-width: 640px) {
-      nav { overflow-x: auto; justify-content: flex-start; }
-      nav a { padding: 0.8rem 1.2rem; font-size: 0.78rem; }
-      .hero-frame { padding: 2.5rem 1.8rem; }
-      .gallery-grid { columns: 2 160px; column-gap: 1.2rem; }
-      .photo-card { margin-bottom: 1.2rem; }
-      .timeline-year { font-size: 2.2rem; min-width: 70px; }
-      .timeline-photo { width: 80px; height: 80px; }
-      .timeline-inner { flex-direction: column; gap: 0.8rem; }
+      nav { gap: 0; padding: 0 0.5rem; overflow-x: auto; justify-content: flex-start; }
+      nav a { padding: 1rem 0.9rem; font-size: 0.68rem; }
+      section, footer { padding: 5rem 1.4rem; }
+      .gallery-grid { columns: 2; column-gap: 0.8rem; }
+      .photo-card { margin-bottom: 0.8rem; }
+      .polaroid-info { padding: 0.7rem 0.9rem; }
+      .polaroid-caption { font-size: 0.92rem; }
+      .timeline-wrapper { padding-left: 2.2rem; }
+      .timeline-card { flex-direction: column; }
+      .timeline-photo { width: 100%; min-height: 160px; }
+      .timeline-text { padding: 1.4rem; }
+      .hero-title { font-size: clamp(2.8rem, 10vw, 5rem); }
     }
   </style>
 </head>
 <body>
-
-  <!-- Film grain overlay -->
-  <div id="grain" aria-hidden="true"></div>
 
   <!-- ── Navigation ──────────────────────────────────────── -->
   <nav aria-label="Main navigation">
@@ -676,29 +621,25 @@
 
   <!-- ── Hero ────────────────────────────────────────────── -->
   <section id="album">
-    <div class="hero-frame">
-      <div class="hero-corners" aria-hidden="true"></div>
-
-      <p class="hero-eyebrow">est. two thousand twenty one</p>
-
+    <div class="hero-inner">
+      <div class="hero-tag">Est. 2021</div>
       <h1 class="hero-title">My Album</h1>
-
-      <div class="divider" aria-hidden="true">
-        <span class="divider-icon">✦ &nbsp; a collection of moments &nbsp; ✦</span>
-      </div>
-
+      <div class="hero-line"></div>
       <p class="hero-subtitle">Memories worth keeping</p>
+    </div>
+
+    <div class="hero-scroll-hint">
+      <span>Scroll</span>
+      <div class="arrow"></div>
     </div>
   </section>
 
-  <!-- ── Gallery ──────────────────────────────────────────── -->
+  <!-- ── Gallery ─────────────────────────────────────────── -->
   <section id="memories">
     <div class="section-header reveal">
+      <p class="section-label">Collection</p>
       <h2 class="section-title">The Gallery</h2>
-      <p class="section-sub">photographs &amp; fragments of time</p>
-      <div class="divider" aria-hidden="true">
-        <span class="divider-icon">— ✦ —</span>
-      </div>
+      <div class="section-line"></div>
     </div>
 
     <div class="gallery-grid" id="gallery">
@@ -706,150 +647,176 @@
       <div class="photo-card" data-caption="Golden Hour">
         <div class="polaroid">
           <img src="https://picsum.photos/seed/au1/400/500" alt="Golden hour landscape" loading="lazy" />
-          <div class="polaroid-caption"><span>Golden Hour</span></div>
+          <div class="polaroid-info">
+            <span class="polaroid-caption">Golden Hour</span>
+            <span class="polaroid-date">Summer '23</span>
+          </div>
         </div>
       </div>
 
       <div class="photo-card" data-caption="Sunday Walks">
         <div class="polaroid">
           <img src="https://picsum.photos/seed/au2/400/360" alt="Sunday walk in the park" loading="lazy" />
-          <div class="polaroid-caption"><span>Sunday Walks</span></div>
+          <div class="polaroid-info">
+            <span class="polaroid-caption">Sunday Walks</span>
+            <span class="polaroid-date">Spring '22</span>
+          </div>
         </div>
       </div>
 
       <div class="photo-card" data-caption="Summer Haze">
         <div class="polaroid">
           <img src="https://picsum.photos/seed/au3/400/540" alt="Summer haze" loading="lazy" />
-          <div class="polaroid-caption"><span>Summer Haze</span></div>
+          <div class="polaroid-info">
+            <span class="polaroid-caption">Summer Haze</span>
+            <span class="polaroid-date">Aug '23</span>
+          </div>
         </div>
       </div>
 
       <div class="photo-card" data-caption="Old Cobblestones">
         <div class="polaroid">
           <img src="https://picsum.photos/seed/au4/400/450" alt="Cobblestone street" loading="lazy" />
-          <div class="polaroid-caption"><span>Old Cobblestones</span></div>
+          <div class="polaroid-info">
+            <span class="polaroid-caption">Old Cobblestones</span>
+            <span class="polaroid-date">Oct '21</span>
+          </div>
         </div>
       </div>
 
       <div class="photo-card" data-caption="Morning Mist">
         <div class="polaroid">
           <img src="https://picsum.photos/seed/au5/400/330" alt="Morning mist over water" loading="lazy" />
-          <div class="polaroid-caption"><span>Morning Mist</span></div>
+          <div class="polaroid-info">
+            <span class="polaroid-caption">Morning Mist</span>
+            <span class="polaroid-date">Nov '22</span>
+          </div>
         </div>
       </div>
 
       <div class="photo-card" data-caption="Rooftop at Dusk">
         <div class="polaroid">
           <img src="https://picsum.photos/seed/au6/400/500" alt="Rooftop at dusk" loading="lazy" />
-          <div class="polaroid-caption"><span>Rooftop at Dusk</span></div>
+          <div class="polaroid-info">
+            <span class="polaroid-caption">Rooftop at Dusk</span>
+            <span class="polaroid-date">Jul '24</span>
+          </div>
         </div>
       </div>
 
       <div class="photo-card" data-caption="Hidden Garden">
         <div class="polaroid">
           <img src="https://picsum.photos/seed/au7/400/420" alt="Hidden garden path" loading="lazy" />
-          <div class="polaroid-caption"><span>Hidden Garden</span></div>
+          <div class="polaroid-info">
+            <span class="polaroid-caption">Hidden Garden</span>
+            <span class="polaroid-date">May '23</span>
+          </div>
         </div>
       </div>
 
       <div class="photo-card" data-caption="Rainy Windows">
         <div class="polaroid">
           <img src="https://picsum.photos/seed/au8/400/380" alt="Rain on a window pane" loading="lazy" />
-          <div class="polaroid-caption"><span>Rainy Windows</span></div>
+          <div class="polaroid-info">
+            <span class="polaroid-caption">Rainy Windows</span>
+            <span class="polaroid-date">Feb '22</span>
+          </div>
         </div>
       </div>
 
       <div class="photo-card" data-caption="Coastal Breeze">
         <div class="polaroid">
           <img src="https://picsum.photos/seed/au9/400/520" alt="Coastal view" loading="lazy" />
-          <div class="polaroid-caption"><span>Coastal Breeze</span></div>
+          <div class="polaroid-info">
+            <span class="polaroid-caption">Coastal Breeze</span>
+            <span class="polaroid-date">Sep '23</span>
+          </div>
         </div>
       </div>
 
       <div class="photo-card" data-caption="Autumn Lanes">
         <div class="polaroid">
           <img src="https://picsum.photos/seed/au10/400/350" alt="Autumn lane" loading="lazy" />
-          <div class="polaroid-caption"><span>Autumn Lanes</span></div>
+          <div class="polaroid-info">
+            <span class="polaroid-caption">Autumn Lanes</span>
+            <span class="polaroid-date">Oct '22</span>
+          </div>
         </div>
       </div>
 
       <div class="photo-card" data-caption="Lantern Light">
         <div class="polaroid">
           <img src="https://picsum.photos/seed/au11/400/480" alt="Lantern at night" loading="lazy" />
-          <div class="polaroid-caption"><span>Lantern Light</span></div>
+          <div class="polaroid-info">
+            <span class="polaroid-caption">Lantern Light</span>
+            <span class="polaroid-date">Dec '21</span>
+          </div>
         </div>
       </div>
 
       <div class="photo-card" data-caption="First Snow">
         <div class="polaroid">
           <img src="https://picsum.photos/seed/au12/400/400" alt="First snowfall" loading="lazy" />
-          <div class="polaroid-caption"><span>First Snow</span></div>
+          <div class="polaroid-info">
+            <span class="polaroid-caption">First Snow</span>
+            <span class="polaroid-date">Jan '24</span>
+          </div>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- ── Timeline ─────────────────────────────────────────── -->
+  <!-- ── Timeline ────────────────────────────────────────── -->
   <section id="timeline">
     <div class="section-header reveal">
+      <p class="section-label">Chronology</p>
       <h2 class="section-title">Memories in Time</h2>
-      <p class="section-sub">a chronology of dear moments</p>
-      <div class="divider" aria-hidden="true">
-        <span class="divider-icon">— ✦ —</span>
-      </div>
+      <div class="section-line"></div>
     </div>
 
     <div class="timeline-wrapper">
 
       <div class="timeline-entry reveal">
         <div class="timeline-year">2021</div>
-        <div class="timeline-content">
-          <div class="timeline-inner">
-            <img class="timeline-photo" src="https://picsum.photos/seed/tl2021/220/220" alt="2021 memory" loading="lazy" />
-            <div class="timeline-text">
-              <h3>A New Beginning</h3>
-              <p>The year everything quietly started over. Long walks in empty streets, rediscovering what stillness sounds like. Afternoons stretched long and golden, and somehow, that felt like enough.</p>
-            </div>
+        <div class="timeline-card">
+          <img class="timeline-photo" src="https://picsum.photos/seed/tl2021/360/360" alt="2021 memory" loading="lazy" />
+          <div class="timeline-text">
+            <h3>A New Beginning</h3>
+            <p>The year everything quietly started over. Long walks in empty streets, rediscovering what stillness sounds like. Afternoons stretched long and golden, and somehow, that felt like enough.</p>
           </div>
         </div>
       </div>
 
       <div class="timeline-entry reveal">
         <div class="timeline-year">2022</div>
-        <div class="timeline-content">
-          <div class="timeline-inner">
-            <img class="timeline-photo" src="https://picsum.photos/seed/tl2022/220/220" alt="2022 memory" loading="lazy" />
-            <div class="timeline-text">
-              <h3>Open Roads</h3>
-              <p>Road trips with windows down and playlists on shuffle. Roadside diners, misread maps, and laughing until the car drifted into the wrong lane. Every detour turned into the best part.</p>
-            </div>
+        <div class="timeline-card">
+          <img class="timeline-photo" src="https://picsum.photos/seed/tl2022/360/360" alt="2022 memory" loading="lazy" />
+          <div class="timeline-text">
+            <h3>Open Roads</h3>
+            <p>Road trips with windows down and playlists on shuffle. Roadside diners, misread maps, and laughing until the car drifted into the wrong lane. Every detour turned into the best part.</p>
           </div>
         </div>
       </div>
 
       <div class="timeline-entry reveal">
         <div class="timeline-year">2023</div>
-        <div class="timeline-content">
-          <div class="timeline-inner">
-            <img class="timeline-photo" src="https://picsum.photos/seed/tl2023/220/220" alt="2023 memory" loading="lazy" />
-            <div class="timeline-text">
-              <h3>Gathering Light</h3>
-              <p>The summer of rooftop dinners and late-night conversations. New friendships that felt like they had always existed. Polaroids pinned to walls and pressed flowers between book pages.</p>
-            </div>
+        <div class="timeline-card">
+          <img class="timeline-photo" src="https://picsum.photos/seed/tl2023/360/360" alt="2023 memory" loading="lazy" />
+          <div class="timeline-text">
+            <h3>Gathering Light</h3>
+            <p>The summer of rooftop dinners and late-night conversations. New friendships that felt like they had always existed. Polaroids pinned to walls and pressed flowers between book pages.</p>
           </div>
         </div>
       </div>
 
       <div class="timeline-entry reveal">
         <div class="timeline-year">2024</div>
-        <div class="timeline-content">
-          <div class="timeline-inner">
-            <img class="timeline-photo" src="https://picsum.photos/seed/tl2024/220/220" alt="2024 memory" loading="lazy" />
-            <div class="timeline-text">
-              <h3>Staying Present</h3>
-              <p>A year of small rituals made sacred — morning coffee in quiet kitchens, evening skies that demanded to be watched. Choosing to remember the ordinary because it is, in fact, extraordinary.</p>
-            </div>
+        <div class="timeline-card">
+          <img class="timeline-photo" src="https://picsum.photos/seed/tl2024/360/360" alt="2024 memory" loading="lazy" />
+          <div class="timeline-text">
+            <h3>Staying Present</h3>
+            <p>A year of small rituals made sacred — morning coffee in quiet kitchens, evening skies that demanded to be watched. Choosing to remember the ordinary because it is, in fact, extraordinary.</p>
           </div>
         </div>
       </div>
@@ -860,10 +827,9 @@
   <!-- ── About / Footer ──────────────────────────────────── -->
   <footer id="about">
     <div class="section-header reveal">
-      <h2 class="section-title">A Note</h2>
-      <div class="divider" aria-hidden="true">
-        <span class="divider-icon">— ✦ —</span>
-      </div>
+      <p class="section-label">Closing Note</p>
+      <h2 class="section-title">About This Album</h2>
+      <div class="section-line"></div>
     </div>
 
     <p class="about-text reveal">
@@ -873,26 +839,21 @@
       the moment you look at it.
     </p>
 
-    <div class="divider" aria-hidden="true">
-      <span class="divider-icon">✦</span>
-    </div>
+    <p class="footer-sig reveal">— My Album</p>
 
-    <p class="footer-sig">with warmth,</p>
-    <p class="footer-sig" style="font-size:1.9rem; margin-top:0.2rem;">My Album</p>
-
-    <p class="footer-note">handcrafted with memory &amp; care &nbsp;·&nbsp; all photographs via picsum.photos</p>
+    <p class="footer-bottom">Handcrafted with care &nbsp;&middot;&nbsp; Photos via Picsum</p>
   </footer>
 
-  <!-- ── Lightbox ─────────────────────────────────────────── -->
+  <!-- ── Lightbox ────────────────────────────────────────── -->
   <div id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
-    <div id="lightbox-img-wrap">
-      <button id="lightbox-close" aria-label="Close photo viewer">✕</button>
+    <div id="lightbox-content">
+      <button id="lightbox-close" aria-label="Close photo viewer">&times;</button>
       <img id="lightbox-img" src="" alt="" />
       <p id="lightbox-caption"></p>
     </div>
   </div>
 
-  <!-- ── Scripts ──────────────────────────────────────────── -->
+  <!-- ── Scripts ─────────────────────────────────────────── -->
   <script>
     /* ─── Intersection Observer — scroll reveals ──────── */
     const revealEls = document.querySelectorAll('.reveal');
@@ -903,7 +864,7 @@
           revealObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
 
     revealEls.forEach(el => revealObserver.observe(el));
 
@@ -912,16 +873,13 @@
     const cardObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // stagger based on card index within visible batch
           const idx = Array.from(cards).indexOf(entry.target);
-          const delay = (idx % 4) * 110; // stagger groups of 4
-          setTimeout(() => {
-            entry.target.classList.add('visible');
-          }, delay);
+          const delay = (idx % 3) * 120;
+          setTimeout(() => entry.target.classList.add('visible'), delay);
           cardObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+    }, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
 
     cards.forEach(card => cardObserver.observe(card));
 
@@ -943,23 +901,18 @@
     function closeLightbox() {
       lightbox.classList.remove('open');
       document.body.style.overflow = '';
-      // Clear src after fade-out to avoid flash next open
       setTimeout(() => {
-        if (!lightbox.classList.contains('open')) {
-          lightboxImg.src = '';
-        }
-      }, 520);
+        if (!lightbox.classList.contains('open')) lightboxImg.src = '';
+      }, 500);
     }
 
-    // Attach click to each polaroid
     document.querySelectorAll('.photo-card').forEach(card => {
       card.addEventListener('click', () => {
-        const img     = card.querySelector('img');
+        const img = card.querySelector('img');
         const caption = card.dataset.caption || '';
         openLightbox(img.src, img.alt, caption);
       });
 
-      // Keyboard accessibility
       card.setAttribute('tabindex', '0');
       card.setAttribute('role', 'button');
       card.setAttribute('aria-label', `Open photo: ${card.dataset.caption || 'photo'}`);
@@ -972,18 +925,12 @@
     });
 
     lightboxClose.addEventListener('click', closeLightbox);
-
-    lightbox.addEventListener('click', e => {
-      if (e.target === lightbox) closeLightbox();
-    });
-
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && lightbox.classList.contains('open')) {
-        closeLightbox();
-      }
+      if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
     });
 
-    /* ─── Smooth-scroll nav (polyfill for older Safari) ── */
+    /* ─── Nav smooth scroll ───────────────────────────── */
     document.querySelectorAll('nav a[href^="#"]').forEach(link => {
       link.addEventListener('click', e => {
         const target = document.querySelector(link.getAttribute('href'));
@@ -993,6 +940,25 @@
         }
       });
     });
+
+    /* ─── Nav active state on scroll ──────────────────── */
+    const sections = document.querySelectorAll('section, footer');
+    const navLinks = document.querySelectorAll('nav a');
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach(link => {
+            link.style.color = link.getAttribute('href') === `#${id}`
+              ? 'var(--espresso)'
+              : '';
+          });
+        }
+      });
+    }, { threshold: 0.3 });
+
+    sections.forEach(s => sectionObserver.observe(s));
   </script>
 
 </body>
